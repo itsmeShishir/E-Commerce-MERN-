@@ -3,7 +3,7 @@ import { initializePayment, verifyPayment } from "../controllers/paymentControll
 
 const router = express.Router();
 
-router.route("/initialize").post(initializePayment);
-router.route("/verify").get(verifyPayment);
+router.post("/initialize", initializePayment);
+router.get("/verify", verifyPayment);
 
 export default router;
