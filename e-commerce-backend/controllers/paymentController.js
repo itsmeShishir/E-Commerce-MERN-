@@ -147,15 +147,19 @@ export const verifyPayment = async (req, res) => {
         { headers }
       );
   
-      // Check if Khalti lookup indicates a completed payment
       if (response.status === 200 && response.data.status === "Completed") {
         order.paymentStatus = "Completed";
         await order.save();
-        return res.redirect("http://localhost:5173/?status=success");
+        console.log("Payment verified! Redirecting...");
+        console.log(order);
+        return res.redirect("http://localhost:5173/payment-success");
       } else {
+
+        console.log("Payment verification failed. Redirecting...");
         return res.redirect("http://localhost:5173/?status=failed");
       }
     } catch (error) {
+      console.log(error);
       console.error("Khalti API Error:", error.response?.data || error.message);
       return res.redirect("http://localhost:5173/?status=failed");
     }
